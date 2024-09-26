@@ -1,0 +1,105 @@
+functions:
+
+pygame.init() - initialise pygame engine
+
+while True: - loop to ensure that the display window for the game does not close, but stays open due to infinite loop
+
+pygame.display.update() - updates the screen that displays to the player for every new element that changes as the code progress
+
+for event in pygame.event.get() - nested inside the while loop, what it does is look for user inputs based off every event that is possible in the pygame event list
+
+pygame.quit() - opposite of pyagme.init(), it ends the pygame program
+
+pygame.display.set_caption() - set title of window popup screen
+
+pygame.time.Clock() - creates a clock function to keep track of time and also help to control frame rate ceiling
+clock.tick(60) - i think it mean 60fps
+
+concept -  surface(be it text,colour or image) must be placed on display screen to actually see it on the user display
+
+pygame.Surface() - adds another layer (like a post it on a board) on top of the display
+
+screen.blit() - stands for block image transfer, basically meaning u want to put one surface on another.
+the arguments are -
+1)surface u want to place, 2)the position in terms of x and y of top left of the display
+
+concept - x axis starts from top left of the display. +x moves right and +y moved down
+
+CREATING IMAGE:
+pygame.image.load(‘filepath.png’)
+
+concept - it matters the order of which u create the surface (aka screen.blit()) because the one that is created later will be on top of the previous one
+
+CREATING TEXT:
+pygame.font.Font(filepath of font.ttf, font style(int)) - load the font
+
+testfont.render(text, Antialias(T/F),colour)
+
+ANIMATION:
+create an image and paste in on display.
+create a variable for the x or y coordinate of the image
+in the while loop change the position by +=1 or -=1
+e.g. snail_pos -= 1
+screen.blit(image, (snail_pos,250))
+
+.convert/ .convert_alpha() - helps surface get converted in a format where it is more efficient in pygames which in theory makes the game more efficient
+
+concept - rectangles. basically pasting your image onto a rectangle and using the rectangle as the main layer to position things so that you can have more control of which point u want to place the object because u are not restricted to the top left corner of the image to place the spot. (e.g. can use midleft, midbottom, bottomright) also can have animations that interact with other rectangles through 'collisions'. 
+
+.get_rect() fn:
+pygame.rect(top,left,width,height) - not often used
+
+name_of_image.get_rect(midleft = (200,20)) - used more often bcus it makes the rectangle same size as image
+
+print(image_of_rect.left) - see position of player
+
+concept - sprite function basically combines rectangles and the image together so u dont have to always create two things to make one complete image
+
+COLLISION
+name_of_rect1.coliderect(name_of_rect2) - the code will give u 0 when there is no collision, and 1 when there is.
+
+usually written in if statement. e.g [if player_rect.coliderect(snail_rect):]
+
+rect1.collidepoint(x,y) - check if a point collects with a rectangle, used for when user click on a rect. (but not frequently used)
+
+Getting mouse position:
+
+pygame.mouse() - get mouse position, click, buttons and visibility etc.
+1) to get x and y coordinate for collidepoint(x,y) function, use pygame.mouse.get_pos()
+2) pygame.mouse.get_pressed (it gets a boolean statement of the buttons pressed on the mouse e.g. if left mouse click = (True , False, False)
+
+event loop - get mouse motion, clicks etc
+1) if event.type == pygame.MOUSEMOTION:
+if player_rect.collidepoint(event.pos): - (gives u position of mouse in x,y coordiantes)
+2) if event.type == pygame.MOUSEBUTTONDOWN: or MOUSEBUTTONDOWN (checks if button is clicked or released)
+
+centering text with rectangle:
+text_rect = text_surface.get_rect(center = (x,y))
+
+pygame.draw - draw rectangle, circle, line etc.:
+pygame.draw.rect(display, colour, surface_drawn_on,border width, border rounding) - draw a rectangle
+to create margin around text, u can make two drawn rectangles, one with border argument(since pygame removes the center of the rect when border argument is input) and one without border argument.
+
+if u wan to use a specific colour, in the colour argument use hexadecimal or rgb. e.g. - (64,64,64) or #c0e83c
+
+
+SPRITES - (basically a surface and a rectangle combined. Its main function is to 1)draw all the sprites and 2)update all the sprites, so when calling function,
+input player.update() instead of player.jump)
+e.g.
+class (xxx)pygame.sprite.Sprite):
+	def __init__(self):
+		# this code initialises sprite class inside this Player class.
+		super().__init__()
+
+# these two usually comes together with sprite classes
+self.image 
+self.rect
+=========================================================
+
+group - for multiple sprite class (e.g. misc animations)
+pygame.sprite.GroupSingle - for one sprite (e.g. player)
+- reason for grouping differntly is for collision detection
+	
+
+
+
